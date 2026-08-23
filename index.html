@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Do So Many Egyptians Speak English?</title>
+<style>
+  :root{
+    --gold:#c9a24b;
+    --gold-bright:#e8c877;
+    --navy:#0c1420;
+    --sand:#e7d3a8;
+    --ink:#f4ecd8;
+    --red:#7a1f2b;
+    --teal:#0f3d3e;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;padding:0;height:100%;width:100%;
+    background:var(--navy);
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    overflow:hidden;
+  }
+  .deck{
+    position:relative;
+    width:100vw;height:100vh;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 900ms ease;
+    display:flex;
+    align-items:flex-end;
+    z-index:1;
+  }
+  .slide.active{
+    opacity:1;
+    visibility:visible;
+    z-index:2;
+  }
+  .bg-layer{
+    position:absolute;inset:0;
+    overflow:hidden;
+    background:#000;
+  }
+  .bg-layer video{
+    position:absolute;
+    top:50%;left:50%;
+    min-width:100%;min-height:100%;
+    width:auto;height:auto;
+    transform:translate(-50%,-50%);
+    object-fit:cover;
+    filter:saturate(0.85) contrast(1.05);
+  }
+  .css-bg{
+    position:absolute;inset:0;
+    background-size:300% 300%;
+    animation: drift 22s ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%{background-position:0% 30%;}
+    50%{background-position:100% 70%;}
+    100%{background-position:0% 30%;}
+  }
+  .css-bg::after{
+    content:"";
+    position:absolute;inset:0;
+    opacity:0.10;
+    mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .bg-empire{ background-image:
+      radial-gradient(circle at 20% 20%, rgba(201,162,75,0.35), transparent 45%),
+      radial-gradient(circle at 80% 60%, rgba(122,31,43,0.35), transparent 50%),
+      linear-gradient(135deg,#0c1420,#1b2c3f 40%,#0c1420 80%);
+  }
+  .bg-school{ background-image:
+      radial-gradient(circle at 70% 30%, rgba(232,200,119,0.30), transparent 45%),
+      radial-gradient(circle at 25% 75%, rgba(120,90,50,0.35), transparent 55%),
+      linear-gradient(135deg,#241a10,#3b2a17 45%,#1a130b 85%);
+  }
+  .bg-flag{ background-image:
+      radial-gradient(circle at 30% 20%, rgba(122,31,43,0.4), transparent 45%),
+      radial-gradient(circle at 75% 70%, rgba(20,20,20,0.5), transparent 55%),
+      linear-gradient(135deg,#111,#3a1620 40%,#111 85%);
+  }
+  .bg-today{ background-image:
+      radial-gradient(circle at 25% 30%, rgba(15,61,62,0.55), transparent 45%),
+      radial-gradient(circle at 80% 75%, rgba(201,162,75,0.30), transparent 55%),
+      linear-gradient(135deg,#04191a,#0f3d3e 45%,#04191a 85%);
+  }
+  .overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(0deg, rgba(4,8,14,0.92) 5%, rgba(4,8,14,0.55) 45%, rgba(4,8,14,0.35) 100%);
+    z-index:1;
+  }
+  .content{
+    position:relative;
+    z-index:2;
+    padding: 5vh 7vw 8vh 7vw;
+    max-width:920px;
+    color:var(--ink);
+  }
+  .kicker{
+    display:inline-block;
+    letter-spacing:0.22em;
+    font-size:12.5px;
+    text-transform:uppercase;
+    color:var(--gold-bright);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight:600;
+    margin-bottom:14px;
+    border-left:3px solid var(--gold);
+    padding-left:10px;
+  }
+  h1.title{
+    font-size:clamp(28px,5vw,58px);
+    line-height:1.08;
+    margin:0 0 22px 0;
+    font-weight:700;
+    color:#fff;
+    text-shadow:0 4px 24px rgba(0,0,0,0.5);
+  }
+  .sub{
+    font-size:clamp(15px,1.6vw,20px);
+    line-height:1.55;
+    color:var(--sand);
+    max-width:700px;
+    margin-bottom:6px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight:300;
+  }
+  ul.points{
+    list-style:none;
+    margin:18px 0 0 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  ul.points li{
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-weight:300;
+    font-size:clamp(14px,1.35vw,18px);
+    line-height:1.5;
+    color:#eee3c8;
+    position:relative;
+    padding-left:24px;
+    max-width:760px;
+  }
+  ul.points li::before{
+    content:"";
+    position:absolute;
+    left:0;top:0.55em;
+    width:9px;height:9px;
+    border-radius:50%;
+    background:var(--gold-bright);
+  }
+  .closing-line{
+    margin-top:22px;
+    font-style:italic;
+    color:var(--gold-bright);
+    font-size:clamp(15px,1.7vw,21px);
+  }
+  /* title slide special */
+  .slide.title-slide .content{
+    max-width:1000px;
+  }
+  .slide.title-slide h1.title{
+    font-size:clamp(34px,6.2vw,72px);
+  }
+  .brand{
+    position:fixed;
+    top:26px;left:7vw;
+    z-index:10;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    letter-spacing:0.18em;
+    font-size:11px;
+    color:rgba(244,236,216,0.55);
+    text-transform:uppercase;
+  }
+  /* nav */
+  .nav-dots{
+    position:fixed;
+    right:16px;top:50%;
+    transform:translateY(-50%);
+    z-index:10;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:rgba(244,236,216,0.3);
+    cursor:pointer;
+    transition:all 250ms ease;
+    border:1px solid transparent;
+  }
+  .dot.active{
+    background:var(--gold-bright);
+    transform:scale(1.3);
+  }
+  /* Arrows sit fully outside the text column, pinned to the screen's
+     vertical center at the outer edges, so they never sit on top of
+     slide copy no matter how tall the bullet list gets. */
+  .arrow-btn{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:10;
+    background:rgba(12,20,32,0.55);
+    border:1px solid rgba(244,236,216,0.3);
+    color:var(--ink);
+    width:44px;height:44px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    font-size:17px;
+    backdrop-filter:blur(4px);
+    transition:background 200ms ease, transform 200ms ease;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+  }
+  #prevBtn{ left:14px; }
+  #nextBtn{ right:56px; }
+  .arrow-btn:hover{ background:rgba(232,200,119,0.3); transform:translateY(-50%) scale(1.08); }
+  .counter{
+    position:fixed;
+    top:26px; right:7vw;
+    z-index:10;
+    pointer-events:none;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:11px;
+    letter-spacing:0.15em;
+    color:rgba(244,236,216,0.55);
+    text-transform:uppercase;
+  }
+  .progress{
+    position:fixed;
+    top:0;left:0;height:3px;
+    background:linear-gradient(90deg,var(--gold),var(--gold-bright));
+    z-index:11;
+    transition:width 400ms ease;
+  }
+  @media (max-width: 640px){
+    .content{padding:4vh 6vw 12vh 6vw;}
+    .nav-dots{right:14px;gap:9px;}
+    .arrows{padding:0 5vw;}
+  }
+
+  /* Center Slide 8 video and fill background area */
+  .slide[data-index="7"] .bg-layer video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    object-position: center center;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ============================================================
+     NEW UI — split layout used on every slide except the title
+     (media panel with an illustration on one side, text on the
+     other; no video, alternating sides, per-topic accent color)
+     ============================================================ */
+  .slide.split-slide{
+    flex-direction:row;
+    align-items:stretch;
+    background:var(--navy);
+  }
+  .slide.split-slide.reverse{
+    flex-direction:row-reverse;
+  }
+  .split-media{
+    position:relative;
+    flex:0 0 44%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-right:1px solid rgba(201,162,75,0.25);
+  }
+  .slide.split-slide.reverse .split-media{
+    border-right:none;
+    border-left:1px solid rgba(201,162,75,0.25);
+  }
+  .split-media .css-bg{ animation-duration:26s; }
+  .split-media .art{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:0;
+    border:none;
+  }
+  .split-media .art::before{
+    content:"";
+  }
+  .split-media .panel-label{
+    position:absolute;
+    z-index:2;
+    bottom:22px;
+    left:50%;
+    transform:translateX(-50%);
+    text-align:center;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    letter-spacing:0.2em;
+    font-size:11px;
+    text-transform:uppercase;
+    color:var(--gold-bright);
+    background:rgba(12, 20, 32, 0.85);
+    padding:6px 16px;
+    border-radius:20px;
+    border:1px solid rgba(201,162,75,0.4);
+    backdrop-filter:blur(4px);
+    white-space:nowrap;
+  }
+  .split-content{
+    position:relative;
+    z-index:2;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:6vh 6vw;
+    max-width:640px;
+    color:var(--ink);
+  }
+  .split-content .step-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:rgba(244,236,216,0.45);
+    margin-bottom:16px;
+  }
+  .split-content .step-tag .num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:22px;height:22px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    color:var(--gold-bright);
+    font-size:11px;
+  }
+  @media (max-width: 820px){
+    .slide.split-slide, .slide.split-slide.reverse{
+      flex-direction:column;
+    }
+    .split-media{
+      flex:0 0 34%;
+      border-right:none !important;
+      border-left:none !important;
+      border-bottom:1px solid rgba(201,162,75,0.25);
+    }
+    .split-media .art{ max-height:24vh; width:60%; }
+    .split-content{ padding:3vh 6vw; max-width:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="brand">Egypt &amp; English · Presentation by Furkan</div>
+<div class="progress" id="progressBar" style="width:14.2%;"></div>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1 : TITLE — video plays once, does not loop -->
+  <section class="slide title-slide active" data-index="0">
+    <div class="bg-layer">
+      <div class="css-bg bg-empire"></div>
+      <video muted playsinline preload="none"
+        data-src="https://nexucore.github.io/egypt/page1_2.mp4"
+        onerror="this.style.display='none'">
+      </video>
+    </div>
+    <div class="overlay"></div>
+    <div class="content">
+      <span class="kicker">Language &amp; Power in Egypt</span>
+      <h1 class="title">Why Do So Many Egyptians<br>Speak English?</h1>
+      <p class="sub">Arabic is the native language spoken across Egypt. However, over the past 150 years, English grew into a vital second language for career and global opportunities. Here is how history, trade, and geography shaped that reality.</p>
+      <span class="kicker">By Furkan</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 : CROSSROADS OF EMPIRES — split layout, no video, custom SVG art -->
+  <section class="slide split-slide" data-index="1">
+    <div class="split-media css-bg bg-empire">
+      <img class="art" src="https://nexucore.github.io/egypt/page2.png" alt="https://nexucore.github.io/egypt/page2.png">
+      <div class="panel-label">Africa · Asia · Mediterranean</div>
+    </div>
+    <div class="split-content">
+      <span class="step-tag"><span class="num">1</span> Before British Rule</span>
+      <h1 class="title">At the Center of World Empires</h1>
+      <ul class="points">
+        <li>Egypt sits right at the meeting point of Africa, Asia, and the Mediterranean, making it a key location for global conquerors.</li>
+        <li>Over centuries, it was ruled by Persians, Greeks, and Romans before Arab Muslim forces arrived in the 7th century.</li>
+        <li>That Arab conquest established Arabic as the main everyday language, a status it has held for more than 1,300 years.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 : SUEZ CANAL — split layout, no video, custom SVG art -->
+  <section class="slide split-slide reverse" data-index="2">
+    <div class="split-media css-bg bg-empire">
+      <video class="art" data-src="https://nexucore.github.io/egypt/page3.mp4" muted playsinline preload="none"></video>
+      <div class="panel-label">Mediterranean → Red Sea</div>
+    </div>
+    <div class="split-content">
+      <span class="step-tag"><span class="num">2</span> 1869: A Game-Changing Canal</span>
+      <h1 class="title">The Opening of the Suez Canal</h1>
+      <ul class="points">
+        <li>Completed in 1869 under French guidance, the Suez Canal connected the Mediterranean Sea straight to the Red Sea.</li>
+        <li>This dramatically cut travel times between Europe and Asia, turning Egypt into one of the most important trade stops on Earth.</li>
+        <li>To secure control over this trade line, Britain bought Egypt's canal shares in 1875, cementing a lasting presence in the region.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 : BRITISH OCCUPATION — split layout, custom SVG art -->
+  <section class="slide split-slide" data-index="3">
+    <div class="split-media css-bg bg-empire">
+      <img class="art" src="https://nexucore.github.io/egypt/page4.png" alt="Add your own image here">
+      <div class="panel-label">1882 — Occupation</div>
+    </div>
+    <div class="split-content">
+      <span class="step-tag"><span class="num">3</span> 1882: Occupation</span>
+      <h1 class="title">Britain Assumes Control</h1>
+      <ul class="points">
+        <li>British forces occupied Egypt in 1882 following local uprisings that threatened European investments and canal routes.</li>
+        <li>While local rulers remained in place on paper, actual administrative power rested with British officials behind the scenes.</li>
+        <li>By 1914, at the start of World War I, Britain officially declared Egypt a formal protectorate.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 : ENGLISH TAKES ROOT — split layout, custom SVG art -->
+  <section class="slide split-slide reverse" data-index="4">
+    <div class="split-media css-bg bg-school">
+      <img class="art" src="https://nexucore.github.io/egypt/page5.png" alt="Add your own image here">
+      <div class="panel-label">Civil Service · Courts · Railways</div>
+    </div>
+    <div class="split-content">
+      <span class="step-tag"><span class="num">4</span> Colonial Influence</span>
+      <h1 class="title">English as the Language of Opportunity</h1>
+      <ul class="points">
+        <li>British officials managed government offices, legal systems, and railways primarily using the English language.</li>
+        <li>State schools were set up to educate local professionals, making fluency in English essential for career advancement.</li>
+        <li>Knowing English became the gateway to prestigious roles in public service, law, and corporate business.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 : INDEPENDENCE — split layout, custom SVG art -->
+  <section class="slide split-slide" data-index="5">
+    <div class="split-media css-bg bg-flag">
+      <img class="art" src="https://nexucore.github.io/egypt/page6.png" alt="Add your own image here">
+      <div class="panel-label">National Sovereignty</div>
+    </div>
+    <div class="split-content">
+      <span class="step-tag"><span class="num">5</span> 1922 to 1956</span>
+      <h1 class="title">Independence and Lasting Habits</h1>
+      <ul class="points">
+        <li>Egypt gained partial independence in 1922 and full self-rule after British troops departed following the 1956 Suez Crisis.</li>
+        <li>Arabic was established as the sole official language to restore national identity and pride.</li>
+        <li>Even so, English remained deeply embedded in higher education, medicine, law, and international commerce.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 : EGYPT TODAY — split layout, custom SVG art -->
+  <section class="slide split-slide reverse" data-index="6">
+    <div class="split-media css-bg bg-empire">
+      <video class="art" data-src="https://nexucore.github.io/egypt/page7.mp4" muted playsinline preload="none"></video>
+      <div class="panel-label">Mediterranean → Red Sea</div>
+    </div>
+    <div class="split-content">
+      <span class="step-tag"><span class="num">6</span> Present Day</span>
+      <h1 class="title">A Practical Second Language</h1>
+      <ul class="points">
+        <li>Arabic stays the primary language for everyday life and culture across the entire nation.</li>
+        <li>English stands out as the main second language taught in schools and spoken in tourism, tech, and corporate sectors.</li>
+        <li>International trade, internet media, and global tourism continue to make English a valuable skill for young Egyptians.</li>
+      </ul>
+      <p class="closing-line">History introduced the language, and modern globalization keeps it essential.</p>
+    </div>
+  </section>
+  <!-- SLIDE 8 : THANK YOU — Full Screen Black Hole Background, Text on Left -->
+  <section class="slide title-slide" data-index="7" style="justify-content: flex-start;">
+    <div class="bg-layer">
+      <video muted playsinline preload="none"
+        data-src="https://nexucore.github.io/egypt/last.mp4"
+        onerror="this.style.display='none'">
+      </video>
+    </div>
+    <div class="overlay"></div>
+    <div class="content" style="margin-right: auto; max-width: 600px; text-align: left;">
+      <span class="kicker">Created by Furkan</span>
+      <h1 class="title">Thank You for Your Time</h1>
+      <p class="sub">Feel free to ask any questions or share your thoughts.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav-dots" id="navDots"></div>
+
+<div class="arrows">
+  <div class="arrow-btn" id="prevBtn">&#8592;</div>
+  <div class="counter" id="counter">1 / 7</div>
+  <div class="arrow-btn" id="nextBtn">&#8594;</div>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let current = 0;
+
+  const dotsContainer = document.getElementById('navDots');
+  slides.forEach((s,i)=>{
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0 ? ' active' : '');
+    d.addEventListener('click', ()=>goTo(i));
+    dotsContainer.appendChild(d);
+  });
+  const dots = Array.from(dotsContainer.children);
+  const counter = document.getElementById('counter');
+  const progressBar = document.getElementById('progressBar');
+
+  function playSlideVideo(slide){
+    const v = slide.querySelector('video');
+    if(!v) return;
+    const src = v.getAttribute('data-src');
+    if(src && v.getAttribute('src') !== src){
+      v.setAttribute('src', src);
+      v.load();
+    }
+    v.currentTime = 0;
+    const p = v.play();
+    if(p && p.catch) p.catch(()=>{});
+  }
+  function pauseSlideVideo(slide){
+    const v = slide.querySelector('video');
+    if(!v) return;
+    v.pause();
+    // fully release the source so an inactive slide's video stops
+    // buffering in the background and doesn't fight the active one
+    // for bandwidth (this was the cause of the stop/start stutter).
+    v.removeAttribute('src');
+    v.load();
+  }
+
+  function goTo(i){
+    if(i < 0 || i >= total) return;
+    slides[current].classList.remove('active');
+    pauseSlideVideo(slides[current]);
+    dots[current].classList.remove('active');
+
+    current = i;
+
+    slides[current].classList.add('active');
+    playSlideVideo(slides[current]);
+    dots[current].classList.add('active');
+
+    counter.textContent = (current+1) + ' / ' + total;
+    progressBar.style.width = (((current+1)/total)*100) + '%';
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', ()=>goTo(current-1));
+  document.getElementById('nextBtn').addEventListener('click', ()=>goTo(current+1));
+
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowRight' || e.key === ' ') goTo(current+1);
+    if(e.key === 'ArrowLeft') goTo(current-1);
+  });
+
+  // basic touch swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e=>{ touchStartX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', e=>{
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    if(dx > 50) goTo(current-1);
+    if(dx < -50) goTo(current+1);
+  });
+
+  // kick off only the first slide's video — every other <video> stays
+  // completely unloaded (no data-src copied into src) until its slide
+  // is actually navigated to.
+  playSlideVideo(slides[0]);
+  counter.textContent = '1 / ' + total;
+  progressBar.style.width = ((1/total)*100) + '%';
+</script>
+
+</body>
+</html>
